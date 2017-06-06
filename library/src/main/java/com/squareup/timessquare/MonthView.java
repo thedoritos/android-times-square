@@ -19,6 +19,8 @@ public class MonthView extends LinearLayout {
   CalendarGridView grid;
   private Listener listener;
   private List<CalendarCellDecorator> decorators;
+  private List<CalendarCellDecorator> updateDecorators;
+  private List<List<MonthCellDescriptor>> cells;
   private boolean isRtl;
   private Locale locale;
 
@@ -92,6 +94,10 @@ public class MonthView extends LinearLayout {
     return decorators;
   }
 
+  public void setUpdateDecorators(List<CalendarCellDecorator> decorators) {
+    this.updateDecorators = decorators;
+  }
+
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     title = (TextView) findViewById(R.id.title);
@@ -102,6 +108,7 @@ public class MonthView extends LinearLayout {
       boolean displayOnly, Typeface titleTypeface, Typeface dateTypeface) {
     Logr.d("Initializing MonthView (%d) for %s", System.identityHashCode(this), month);
     long start = System.currentTimeMillis();
+    this.cells = cells;
     title.setText(month.getLabel());
     NumberFormat numberFormatter = NumberFormat.getInstance(locale);
 
@@ -151,6 +158,27 @@ public class MonthView extends LinearLayout {
     }
 
     Logr.d("MonthView.init took %d ms", System.currentTimeMillis() - start);
+  }
+
+  public void update() {
+    for (int i = 0; i < 6; i++) {
+      CalendarRowView weekRow = (CalendarRowView) grid.getChildAt(i + 1);
+      weekRow.setListener(listener);
+      final int numRows = cells.size();
+      if (i < numRows) {
+        List<MonthCellDescriptor> week = cells.get(i);
+        for (int c = 0; c < week.size(); c++) {
+          MonthCellDescriptor cell = week.get(isRtl ? 6 - c : c);
+          CalendarCellView cellView = (CalendarCellView) weekRow.getChildAt(c);
+
+          if (null != updateDecorators) {
+            for (CalendarCellDecorator decorator : updateDecorators) {
+              decorator.decorate(cellView, cell.getDate());
+            }
+          }
+        }
+      }
+    }
   }
 
   public void setDividerColor(int color) {
