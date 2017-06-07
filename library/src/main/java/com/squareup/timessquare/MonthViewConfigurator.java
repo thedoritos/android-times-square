@@ -5,5 +5,5 @@ package com.squareup.timessquare;
  */
 
 public interface MonthViewConfigurator {
-    void configure(MonthView monthView, MonthDescriptor monthDescriptor);
+    void configure(MonthView monthView, Month month);
 }
