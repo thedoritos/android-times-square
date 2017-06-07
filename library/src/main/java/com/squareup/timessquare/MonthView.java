@@ -19,7 +19,6 @@ public class MonthView extends LinearLayout {
   CalendarGridView grid;
   private Listener listener;
   private List<CalendarCellDecorator> decorators;
-  private List<CalendarCellDecorator> updateDecorators;
   private List<List<MonthCellDescriptor>> cells;
   private boolean isRtl;
   private Locale locale;
@@ -92,10 +91,6 @@ public class MonthView extends LinearLayout {
 
   public List<CalendarCellDecorator> getDecorators() {
     return decorators;
-  }
-
-  public void setUpdateDecorators(List<CalendarCellDecorator> decorators) {
-    this.updateDecorators = decorators;
   }
 
   @Override protected void onFinishInflate() {
@@ -171,8 +166,8 @@ public class MonthView extends LinearLayout {
           MonthCellDescriptor cell = week.get(isRtl ? 6 - c : c);
           CalendarCellView cellView = (CalendarCellView) weekRow.getChildAt(c);
 
-          if (null != updateDecorators) {
-            for (CalendarCellDecorator decorator : updateDecorators) {
+          if (null != decorators) {
+            for (CalendarCellDecorator decorator : decorators) {
               decorator.decorate(cellView, cell.getDate());
             }
           }
