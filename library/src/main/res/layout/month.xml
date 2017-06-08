@@ -15,11 +15,15 @@
       android:gravity="center_horizontal"
       style="@style/CalendarTitle"
       />
+
   <com.squareup.timessquare.CalendarGridView
       android:id="@+id/calendar_grid"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       >
+
+    <include layout="@layout/calendar_title_view"/>
+
     <com.squareup.timessquare.CalendarRowView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,6 +65,7 @@
           style="@style/CalendarCell.DayHeader"
           />
     </com.squareup.timessquare.CalendarRowView>
+
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>

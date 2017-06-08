@@ -54,7 +54,7 @@ public class MonthView extends LinearLayout {
     view.isRtl = isRtl(locale);
     view.locale = locale;
     int firstDayOfWeek = today.getFirstDayOfWeek();
-    final CalendarRowView headerRow = (CalendarRowView) view.grid.getChildAt(0);
+    final CalendarRowView headerRow = view.grid.getWeekDayRow();
     for (int offset = 0; offset < 7; offset++) {
       today.set(Calendar.DAY_OF_WEEK, getDayOfWeek(firstDayOfWeek, offset, view.isRtl));
       final TextView textView = (TextView) headerRow.getChildAt(offset);
@@ -105,12 +105,16 @@ public class MonthView extends LinearLayout {
     long start = System.currentTimeMillis();
     this.cells = cells;
     title.setText(month.getLabel());
+
+    CalendarTitleView titleView = grid.getTitleView();
+    titleView.setTitle(month, cells.get(0), isRtl);
+
     NumberFormat numberFormatter = NumberFormat.getInstance(locale);
 
     final int numRows = cells.size();
     grid.setNumRows(numRows);
     for (int i = 0; i < 6; i++) {
-      CalendarRowView weekRow = (CalendarRowView) grid.getChildAt(i + 1);
+      CalendarRowView weekRow = grid.getWeekRowAt(i);
       weekRow.setListener(listener);
       if (i < numRows) {
         weekRow.setVisibility(VISIBLE);
@@ -157,7 +161,7 @@ public class MonthView extends LinearLayout {
 
   public void update() {
     for (int i = 0; i < 6; i++) {
-      CalendarRowView weekRow = (CalendarRowView) grid.getChildAt(i + 1);
+      CalendarRowView weekRow = grid.getWeekRowAt(i);
       weekRow.setListener(listener);
       final int numRows = cells.size();
       if (i < numRows) {
