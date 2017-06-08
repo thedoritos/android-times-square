@@ -68,6 +68,10 @@ public class CalendarRowView extends ViewGroup implements View.OnClickListener {
     this.isHeaderRow = isHeaderRow;
   }
 
+  public boolean isHeaderRow() {
+    return this.isHeaderRow;
+  }
+
   @Override public void onClick(View v) {
     // Header rows don't have a click listener
     if (listener != null) {
