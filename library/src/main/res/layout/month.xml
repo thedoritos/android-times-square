@@ -15,47 +15,7 @@
 
     <include layout="@layout/calendar_title_view"/>
 
-    <com.squareup.timessquare.CalendarRowView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/calendar_day_headers_paddingbottom"
-        >
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          style="@style/CalendarCell.DayHeader"
-          />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          style="@style/CalendarCell.DayHeader"
-          />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          style="@style/CalendarCell.DayHeader"
-          />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          style="@style/CalendarCell.DayHeader"
-          />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          style="@style/CalendarCell.DayHeader"
-          />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          style="@style/CalendarCell.DayHeader"
-          />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          style="@style/CalendarCell.DayHeader"
-          />
-    </com.squareup.timessquare.CalendarRowView>
+    <include layout="@layout/calendar_day_header"/>
 
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>
