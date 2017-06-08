@@ -2,6 +2,7 @@ package com.squareup.timessquare.sample;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,10 +12,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import com.squareup.timessquare.CalendarCellDecorator;
+import com.squareup.timessquare.CalendarHeaderView;
 import com.squareup.timessquare.CalendarPickerView;
 import com.squareup.timessquare.CalendarPickerView.SelectionMode;
 import com.squareup.timessquare.DefaultDayViewAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -29,6 +32,7 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class SampleTimesSquareActivity extends Activity {
   private static final String TAG = "SampleTimesSquareActivi";
+  private CalendarHeaderView calendarHeader;
   private CalendarPickerView calendar;
   private AlertDialog theDialog;
   private CalendarPickerView dialogView;
@@ -43,6 +47,11 @@ public class SampleTimesSquareActivity extends Activity {
 
     final Calendar lastYear = Calendar.getInstance();
     lastYear.add(Calendar.YEAR, -1);
+
+    Calendar today = Calendar.getInstance();
+
+    calendarHeader = (CalendarHeaderView) findViewById(R.id.calendar_header_view);
+    calendarHeader.init(today);
 
     calendar = (CalendarPickerView) findViewById(R.id.calendar_view);
     calendar.init(lastYear.getTime(), nextYear.getTime()) //
