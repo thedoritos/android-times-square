@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.squareup.timessquare.CalendarRowView
+<com.squareup.timessquare.CalendarHeaderView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -42,4 +42,4 @@
         android:layout_height="wrap_content"
         style="@style/CalendarCell.DayHeader"
         />
-</com.squareup.timessquare.CalendarRowView>
+</com.squareup.timessquare.CalendarHeaderView>

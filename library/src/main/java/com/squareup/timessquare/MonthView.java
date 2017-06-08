@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.timessquare.utils.MonthUtil;
+
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -50,12 +53,12 @@ public class MonthView extends LinearLayout {
 
     final int originalDayOfWeek = today.get(Calendar.DAY_OF_WEEK);
 
-    view.isRtl = isRtl(locale);
+    view.isRtl = MonthUtil.isRtl(locale);
     view.locale = locale;
     int firstDayOfWeek = today.getFirstDayOfWeek();
     final CalendarRowView headerRow = view.grid.getWeekDayRow();
     for (int offset = 0; offset < 7; offset++) {
-      today.set(Calendar.DAY_OF_WEEK, getDayOfWeek(firstDayOfWeek, offset, view.isRtl));
+      today.set(Calendar.DAY_OF_WEEK, MonthUtil.getDayOfWeek(firstDayOfWeek, offset, view.isRtl));
       final TextView textView = (TextView) headerRow.getChildAt(offset);
       textView.setText(weekdayNameFormat.format(today.getTime()));
     }
@@ -63,21 +66,6 @@ public class MonthView extends LinearLayout {
     view.listener = listener;
     view.decorators = decorators;
     return view;
-  }
-
-  private static int getDayOfWeek(int firstDayOfWeek, int offset, boolean isRtl) {
-    int dayOfWeek = firstDayOfWeek + offset;
-    if (isRtl) {
-      return 8 - dayOfWeek;
-    }
-    return dayOfWeek;
-  }
-
-  private static boolean isRtl(Locale locale) {
-    // TODO convert the build to gradle and use getLayoutDirection instead of this (on 17+)?
-    final int directionality = Character.getDirectionality(locale.getDisplayName(locale).charAt(0));
-    return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT
-        || directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
   }
 
   public MonthView(Context context, AttributeSet attrs) {

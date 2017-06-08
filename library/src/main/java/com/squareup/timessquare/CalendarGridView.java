@@ -70,11 +70,11 @@ public class CalendarGridView extends ViewGroup {
   }
 
   public void setDisplayHeader(boolean displayHeader) {
-    getChildAt(0).setVisibility(displayHeader ? VISIBLE : GONE);
+    getChildAt(WEEK_DAY_ROW_INDEX).setVisibility(displayHeader ? VISIBLE : GONE);
   }
 
   public void setHeaderTextColor(int color) {
-    ((CalendarRowView) getChildAt(0)).setCellTextColor(color);
+    ((CalendarRowView) getChildAt(WEEK_DAY_ROW_INDEX)).setCellTextColor(color);
   }
 
   public void setTypeface(Typeface typeface) {
