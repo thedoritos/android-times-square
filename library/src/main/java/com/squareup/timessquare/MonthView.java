@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class MonthView extends LinearLayout {
-  TextView title;
   CalendarGridView grid;
   private Listener listener;
   private List<CalendarCellDecorator> decorators;
@@ -54,7 +53,7 @@ public class MonthView extends LinearLayout {
     view.isRtl = isRtl(locale);
     view.locale = locale;
     int firstDayOfWeek = today.getFirstDayOfWeek();
-    final CalendarRowView headerRow = (CalendarRowView) view.grid.getChildAt(0);
+    final CalendarRowView headerRow = view.grid.getWeekDayRow();
     for (int offset = 0; offset < 7; offset++) {
       today.set(Calendar.DAY_OF_WEEK, getDayOfWeek(firstDayOfWeek, offset, view.isRtl));
       final TextView textView = (TextView) headerRow.getChildAt(offset);
@@ -95,7 +94,6 @@ public class MonthView extends LinearLayout {
 
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
-    title = (TextView) findViewById(R.id.title);
     grid = (CalendarGridView) findViewById(R.id.calendar_grid);
   }
 
@@ -104,13 +102,16 @@ public class MonthView extends LinearLayout {
     Logr.d("Initializing MonthView (%d) for %s", System.identityHashCode(this), month);
     long start = System.currentTimeMillis();
     this.cells = cells;
-    title.setText(month.getLabel());
+
+    CalendarTitleView titleView = grid.getTitleView();
+    titleView.setTitle(month, cells.get(0), isRtl);
+
     NumberFormat numberFormatter = NumberFormat.getInstance(locale);
 
     final int numRows = cells.size();
     grid.setNumRows(numRows);
     for (int i = 0; i < 6; i++) {
-      CalendarRowView weekRow = (CalendarRowView) grid.getChildAt(i + 1);
+      CalendarRowView weekRow = grid.getWeekRowAt(i);
       weekRow.setListener(listener);
       if (i < numRows) {
         weekRow.setVisibility(VISIBLE);
@@ -145,11 +146,12 @@ public class MonthView extends LinearLayout {
       }
     }
 
-    if (titleTypeface != null) {
-      title.setTypeface(titleTypeface);
-    }
     if (dateTypeface != null) {
       grid.setTypeface(dateTypeface);
+    }
+    if (titleTypeface != null) {
+      // Overwriting type face.
+      grid.getTitleView().setTypeface(titleTypeface);
     }
 
     Logr.d("MonthView.init took %d ms", System.currentTimeMillis() - start);
@@ -157,7 +159,7 @@ public class MonthView extends LinearLayout {
 
   public void update() {
     for (int i = 0; i < 6; i++) {
-      CalendarRowView weekRow = (CalendarRowView) grid.getChildAt(i + 1);
+      CalendarRowView weekRow = grid.getWeekRowAt(i);
       weekRow.setListener(listener);
       final int numRows = cells.size();
       if (i < numRows) {
@@ -193,7 +195,7 @@ public class MonthView extends LinearLayout {
   }
 
   public void setTitleTextColor(int color) {
-    title.setTextColor(color);
+    grid.getTitleView().setCellTextColor(color);
   }
 
   public void setDisplayHeader(boolean displayHeader) {

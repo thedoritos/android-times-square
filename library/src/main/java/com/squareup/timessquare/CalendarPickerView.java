@@ -198,8 +198,7 @@ public class CalendarPickerView extends ListView {
     minCal = Calendar.getInstance(timeZone, locale);
     maxCal = Calendar.getInstance(timeZone, locale);
     monthCounter = Calendar.getInstance(timeZone, locale);
-    monthNameFormat =
-        new SimpleDateFormat(getContext().getString(R.string.month_name_format), locale);
+    monthNameFormat = new SimpleDateFormat(getContext().getString(R.string.month_name_format), locale);
     monthNameFormat.setTimeZone(timeZone);
     for (MonthDescriptor month : months) {
       month.setLabel(monthNameFormat.format(month.getDate()));

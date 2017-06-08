@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import java.util.Calendar;
 
 import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -30,6 +30,16 @@ public class CalendarGridView extends ViewGroup {
   private final Paint dividerPaint = new Paint();
   private int oldWidthMeasureSize;
   private int oldNumRows;
+
+  /**
+   * The 1st row is for the title of the month.
+   * The 2nd row is for the days of the week.
+   *
+   * @see layout/month.xml
+   */
+  private static final int TITLE_ROW_INDEX = 0;
+  private static final int WEEK_DAY_ROW_INDEX = 1;
+  private static final int FIRST_WEEK_ROW_INDEX = 2;
 
   public CalendarGridView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -71,6 +81,18 @@ public class CalendarGridView extends ViewGroup {
     for (int i = 0; i < getChildCount(); i++) {
       ((CalendarRowView) getChildAt(i)).setTypeface(typeface);
     }
+  }
+
+  public CalendarTitleView getTitleView() {
+    return (CalendarTitleView) getChildAt(TITLE_ROW_INDEX);
+  }
+
+  public CalendarRowView getWeekDayRow() {
+    return (CalendarRowView) getChildAt(WEEK_DAY_ROW_INDEX);
+  }
+
+  public CalendarRowView getWeekRowAt(int index) {
+    return (CalendarRowView) getChildAt(index + FIRST_WEEK_ROW_INDEX);
   }
 
   @Override public void addView(View child, int index, ViewGroup.LayoutParams params) {
