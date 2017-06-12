@@ -527,6 +527,10 @@ public class CalendarPickerView extends ListView {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
   }
 
+  public Month getMonthAt(int index) {
+    return months.get(index);
+  }
+
   public Date getSelectedDate() {
     return (selectedCals.size() > 0 ? selectedCals.get(0).getTime() : null);
   }
