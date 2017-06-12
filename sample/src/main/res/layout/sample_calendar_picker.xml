@@ -103,6 +103,7 @@
       android:divider="@android:color/transparent"
       android:dividerHeight="30dp"
       app:tsquare_displayHeader="false"
+      app:tsquare_titleTextColor="#FF0000"
       />
   <Button
       android:id="@+id/done_button"
