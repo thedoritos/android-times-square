@@ -38,7 +38,7 @@ public class CalendarRowView extends ViewGroup implements View.OnClickListener {
       int r = ((c + 1) * totalWidth) / 7;
       int cellSize = r - l;
       int cellWidthSpec = makeMeasureSpec(cellSize, EXACTLY);
-      int cellHeightSpec = isHeaderRow ? makeMeasureSpec(cellSize, AT_MOST) : cellWidthSpec;
+      int cellHeightSpec = isHeaderRow ? makeMeasureSpec(cellSize, AT_MOST) : makeMeasureSpec(cellSize, MeasureSpec.UNSPECIFIED);
       child.measure(cellWidthSpec, cellHeightSpec);
       // The row height is the height of the tallest cell.
       if (child.getMeasuredHeight() > rowHeight) {
